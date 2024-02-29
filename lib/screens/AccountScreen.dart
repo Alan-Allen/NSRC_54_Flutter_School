@@ -57,9 +57,8 @@ class AccountScreen extends StatelessWidget {
             const SizedBox(
               width: double.infinity, // 让 Row 占据整个屏幕宽度
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(width: 70),
+                  SizedBox(width: 110),
                   SizedBox(
                     width: 100,
                     child: Text('Name', style: TextStyle(color: Colors.black, fontSize: 24)),
@@ -84,7 +83,7 @@ class AccountScreen extends StatelessWidget {
                       print('MF Button Pressed');
                     },
                     text: 'MF',
-                    color: Colors.red,
+                    color: Colors.orange,
                     textColor: Colors.white,
                     width: 10,
                     height: 10
@@ -99,8 +98,29 @@ class AccountScreen extends StatelessWidget {
                   child: Text('admin', style: TextStyle(color: Colors.black, fontSize: 24)),
                 ),
                 const SizedBox(
-                  width: 120,
+                  width: 100,
                   child: Text('1234', style: TextStyle(color: Colors.black, fontSize: 24)),
+                ),
+                CustomButton(
+                    onPressed: () {
+                      print('Update Button Pressed');
+                    },
+                    text: 'Update',
+                    color: Colors.blue,
+                    textColor: Colors.white,
+                    width: 10,
+                    height: 10
+                ),
+                const SizedBox(width: 20),
+                CustomButton(
+                    onPressed: () {
+                      print('Delete Button Pressed');
+                    },
+                    text: 'Delete',
+                    color: Colors.red,
+                    textColor: Colors.white,
+                    width: 10,
+                    height: 10
                 ),
               ],
             ),
@@ -113,7 +133,7 @@ class AccountScreen extends StatelessWidget {
                       print('MF Button Pressed');
                     },
                     text: 'MF',
-                    color: Colors.red,
+                    color: Colors.orange,
                     textColor: Colors.white,
                     width: 10,
                     height: 10
@@ -128,12 +148,33 @@ class AccountScreen extends StatelessWidget {
                   child: Text('alan', style: TextStyle(color: Colors.black, fontSize: 24)),
                 ),
                 const SizedBox(
-                  width: 120,
+                  width: 100,
                   child: Text('4321', style: TextStyle(color: Colors.black, fontSize: 24)),
+                ),
+                CustomButton(
+                    onPressed: () {
+                      print('Update Button Pressed');
+                    },
+                    text: 'Update',
+                    color: Colors.blue,
+                    textColor: Colors.white,
+                    width: 10,
+                    height: 10
+                ),
+                const SizedBox(width: 20),
+                CustomButton(
+                    onPressed: () {
+                      print('Delete Button Pressed');
+                    },
+                    text: 'Delete',
+                    color: Colors.red,
+                    textColor: Colors.white,
+                    width: 10,
+                    height: 10
                 ),
               ],
             ),
-            const SizedBox(height: 450),
+            const SizedBox(height: 500),
             Expanded(
               child: Align(
                 child: Column(
@@ -152,32 +193,6 @@ class AccountScreen extends StatelessWidget {
                           width: 40,
                           height: 15,
                         ),
-                        CustomButton(
-                          onPressed: () {
-                            print('Update Button Pressed');
-                          },
-                          text: 'update',
-                          color: Colors.blue,
-                          textColor: Colors.white,
-                          width: 40,
-                          height: 15,
-                        ),
-                        CustomButton(
-                          onPressed: () {
-                            print('Delete Button Pressed');
-                          },
-                          text: 'delete',
-                          color: Colors.blue,
-                          textColor: Colors.white,
-                          width: 40,
-                          height: 15,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20), // Add spacing between rows
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
                         CustomButton(
                           onPressed: () {
                             print('Intput Button Pressed');
