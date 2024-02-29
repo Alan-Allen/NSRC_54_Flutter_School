@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginScreen(),
         '/signIn': (context) => SignInScreen(),
         '/account': (context) => AccountScreen(),
-        '/password': (context) => const PasswordScreen(),
+        '/password': (context) => PasswordScreen(),
       },
       initialRoute: '/',
     );
