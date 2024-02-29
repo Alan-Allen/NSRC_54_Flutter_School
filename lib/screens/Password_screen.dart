@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:password5_54/component/Button.dart';
 import 'dart:math';
 import 'package:password5_54/component/common_drawer.dart';
 
-class PasswordScreen extends StatelessWidget {
-  PasswordScreen({super.key});
+class PasswordScreen extends StatefulWidget {
+  const PasswordScreen({super.key});
 
+  @override
+  _PasswordScreenState createState() => _PasswordScreenState();
+}
+
+class _PasswordScreenState extends State<PasswordScreen> {
   final TextEditingController _controller = TextEditingController();
   String _generatedPassword = '';
 
@@ -51,8 +55,10 @@ class PasswordScreen extends StatelessWidget {
                 print('Create Button Pressed');
                 String length = _controller.text;
                 int passwordLength = int.tryParse(length) ?? 8;
-                _generatedPassword = Password(passwordLength);
-                print('length: $length, password: $_generatedPassword');
+                setState(() {
+                  _generatedPassword = Password(passwordLength);
+                  print('length: $length, password: $_generatedPassword');
+                });
               },
               text: 'Enter',
               color: Colors.blue,
@@ -61,16 +67,12 @@ class PasswordScreen extends StatelessWidget {
               height: 20,
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Clipboard.setData(ClipboardData(text: _generatedPassword));
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Password copied to clipboard'),
-                  ),
-                );
-              },
-              child: const Text('Copy Password'),
+            Text(
+              'Random Password: $_generatedPassword',
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.normal,
+              ),
             ),
           ],
         ),
