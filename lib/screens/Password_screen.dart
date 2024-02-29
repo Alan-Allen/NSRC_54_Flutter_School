@@ -11,7 +11,8 @@ class PasswordScreen extends StatefulWidget {
 }
 
 class _PasswordScreenState extends State<PasswordScreen> {
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _lengthController = TextEditingController();
+  final TextEditingController _characterController = TextEditingController();
   String _generatedPassword = '';
 
   @override
@@ -37,10 +38,27 @@ class _PasswordScreenState extends State<PasswordScreen> {
               child: SizedBox(
                 width: 500,
                 child: TextField(
-                  controller: _controller,
+                  controller: _lengthController,
                   decoration: InputDecoration(
                     hintText: 'Enter length',
                     labelText: 'Length',
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 30),
+            Center(
+              child: SizedBox(
+                width: 500,
+                child: TextField(
+                  controller: _characterController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter Character',
+                    labelText: 'Character',
                     border: OutlineInputBorder(
                       borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
                       borderRadius: BorderRadius.circular(50.0),
@@ -53,11 +71,15 @@ class _PasswordScreenState extends State<PasswordScreen> {
             CustomButton(
               onPressed: () {
                 print('Create Button Pressed');
-                String length = _controller.text;
+                String length = _lengthController.text;
+                String character = _characterController.text;
+                if(character == '') {
+                  character = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#\$%^&*()-_=+';
+                }
                 int passwordLength = int.tryParse(length) ?? 8;
                 setState(() {
-                  _generatedPassword = Password(passwordLength);
-                  print('length: $length, password: $_generatedPassword');
+                  _generatedPassword = Password(passwordLength, allowedCharacters: character);
+                  print('length: $length, character: $character, password: $_generatedPassword');
                 });
               },
               text: 'Enter',
@@ -80,20 +102,14 @@ class _PasswordScreenState extends State<PasswordScreen> {
     );
   }
 
-  String Password(int length) {
-    const String lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
-    const String uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const String numbers = '0123456789';
-    const String symbols = '!@#\$%^&*()-_=+';
-
-    String characters = lowercaseLetters + uppercaseLetters + numbers + symbols;
-
+  String Password(int length, {String? allowedCharacters}) {
+    allowedCharacters ??= '';
     Random random = Random();
     String password = '';
 
     for (int i = 0; i < length; i++) {
-      int index = random.nextInt(characters.length);
-      password += characters[index];
+      int index = random.nextInt(allowedCharacters.length);
+      password += allowedCharacters[index];
     }
 
     return password;

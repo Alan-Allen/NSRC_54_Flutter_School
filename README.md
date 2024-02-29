@@ -2,7 +2,7 @@
 
 A new Flutter project.
 
-## Getting Started
+## Function
 
 1. Login
 2. Sign Up
