@@ -15,164 +15,143 @@ class AccountScreen extends StatelessWidget {
         appBar: AppBar(),
         drawer: CommonDrawer.getDrawer(context),
         body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Center(
-                  child: SizedBox(
-                    width: 300, // 调整宽度
-                    child: TextField(
-                      controller: _searchController,
-                      decoration: InputDecoration(
-                        hintText: 'Enter Name',
-                        labelText: 'Search',
-                        border: OutlineInputBorder(
-                          borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
-                          borderRadius: BorderRadius.circular(50.0),
+            Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Center(
+                      child: SizedBox(
+                        width: 300, // 调整宽度
+                        child: TextField(
+                          controller: _searchController,
+                          decoration: InputDecoration(
+                            hintText: 'Enter Name',
+                            labelText: 'Search',
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
+                              borderRadius: BorderRadius.circular(50.0),
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                    Center(
+                      child: CustomButton(
+                        onPressed: () {
+                          print("Search Button Pressed");
+                          String search = _searchController.text;
+                          print('search: $search');
+                        },
+                        text: 'Search',
+                        color: Colors.blue,
+                        textColor: Colors.white,
+                        width: 20,
+                        height: 15,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 20),
-                Center(
-                  child: CustomButton(
-                    onPressed: () {
-                      print("Search Button Pressed");
-                      String search = _searchController.text;
-                      print('search: $search');
-                    },
-                    text: 'Search',
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                    width: 20,
-                    height: 15,
-                  ),
-                ),
-              ],
             ),
             const SizedBox(height: 30),
-            const SizedBox(
-              width: double.infinity, // 让 Row 占据整个屏幕宽度
-              child: Row(
-                children: [
-                  SizedBox(width: 110),
-                  SizedBox(
-                    width: 100,
-                    child: Text('Name', style: TextStyle(color: Colors.black, fontSize: 24)),
+            const Expanded(
+                child:SizedBox(
+                  width: double.infinity, // 让 Row 占据整个屏幕宽度
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text('Name', style: TextStyle(color: Colors.black, fontSize: 24)),
+                      Text('User', style: TextStyle(color: Colors.black, fontSize: 24)),
+                      Text('Password', style: TextStyle(color: Colors.black, fontSize: 24)),
+                    ],
                   ),
-                  SizedBox(
-                    width: 80,
-                    child: Text('User', style: TextStyle(color: Colors.black, fontSize: 24)),
-                  ),
-                  SizedBox(
-                    width: 120,
-                    child: Text('Password', style: TextStyle(color: Colors.black, fontSize: 24)),
-                  ),
-                ],
-              ),
+                ),
             ),
             const SizedBox(height: 20), // 间距
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomButton(
-                    onPressed: () {
-                      print('MF Button Pressed');
-                    },
-                    text: 'MF',
-                    color: Colors.orange,
-                    textColor: Colors.white,
-                    width: 10,
-                    height: 10
+            Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    CustomButton(
+                        onPressed: () {
+                          print('MF Button Pressed');
+                        },
+                        text: 'MF',
+                        color: Colors.orange,
+                        textColor: Colors.white,
+                        width: 10,
+                        height: 10
+                    ),
+                    const SizedBox(width: 10),
+                    const Text('Admin', style: TextStyle(color: Colors.black, fontSize: 24)),
+                    const Text('admin', style: TextStyle(color: Colors.black, fontSize: 24)),
+                    const Text('1234', style: TextStyle(color: Colors.black, fontSize: 24)),
+                    const SizedBox(width: 10),
+                    CustomButton(
+                        onPressed: () {
+                          print('Update Button Pressed');
+                        },
+                        text: 'Update',
+                        color: Colors.blue,
+                        textColor: Colors.white,
+                        width: 10,
+                        height: 10
+                    ),
+                    CustomButton(
+                        onPressed: () {
+                          print('Delete Button Pressed');
+                        },
+                        text: 'Delete',
+                        color: Colors.red,
+                        textColor: Colors.white,
+                        width: 10,
+                        height: 10
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 40),
-                const SizedBox(
-                  width: 100,
-                  child: Text('Admin', style: TextStyle(color: Colors.black, fontSize: 24)),
-                ),
-                const SizedBox(
-                  width: 100,
-                  child: Text('admin', style: TextStyle(color: Colors.black, fontSize: 24)),
-                ),
-                const SizedBox(
-                  width: 100,
-                  child: Text('1234', style: TextStyle(color: Colors.black, fontSize: 24)),
-                ),
-                CustomButton(
-                    onPressed: () {
-                      print('Update Button Pressed');
-                    },
-                    text: 'Update',
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                    width: 10,
-                    height: 10
-                ),
-                const SizedBox(width: 20),
-                CustomButton(
-                    onPressed: () {
-                      print('Delete Button Pressed');
-                    },
-                    text: 'Delete',
-                    color: Colors.red,
-                    textColor: Colors.white,
-                    width: 10,
-                    height: 10
-                ),
-              ],
             ),
             const SizedBox(height: 20), // 间距
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomButton(
-                    onPressed: () {
-                      print('MF Button Pressed');
-                    },
-                    text: 'MF',
-                    color: Colors.orange,
-                    textColor: Colors.white,
-                    width: 10,
-                    height: 10
+            Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    CustomButton(
+                        onPressed: () {
+                          print('MF Button Pressed');
+                        },
+                        text: 'MF',
+                        color: Colors.orange,
+                        textColor: Colors.white,
+                        width: 10,
+                        height: 10
+                    ),
+                    const SizedBox(width: 10),
+                    const Text('Alan', style: TextStyle(color: Colors.black, fontSize: 24)),
+                    const Text('alan', style: TextStyle(color: Colors.black, fontSize: 24)),
+                    const Text('4321', style: TextStyle(color: Colors.black, fontSize: 24)),
+                    const SizedBox(width: 10),
+                    CustomButton(
+                        onPressed: () {
+                          print('Update Button Pressed');
+                        },
+                        text: 'Update',
+                        color: Colors.blue,
+                        textColor: Colors.white,
+                        width: 10,
+                        height: 10
+                    ),
+                    CustomButton(
+                        onPressed: () {
+                          print('Delete Button Pressed');
+                        },
+                        text: 'Delete',
+                        color: Colors.red,
+                        textColor: Colors.white,
+                        width: 10,
+                        height: 10
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 40),
-                const SizedBox(
-                  width: 100,
-                  child: Text('Alan', style: TextStyle(color: Colors.black, fontSize: 24)),
-                ),
-                const SizedBox(
-                  width: 100,
-                  child: Text('alan', style: TextStyle(color: Colors.black, fontSize: 24)),
-                ),
-                const SizedBox(
-                  width: 100,
-                  child: Text('4321', style: TextStyle(color: Colors.black, fontSize: 24)),
-                ),
-                CustomButton(
-                    onPressed: () {
-                      print('Update Button Pressed');
-                    },
-                    text: 'Update',
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                    width: 10,
-                    height: 10
-                ),
-                const SizedBox(width: 20),
-                CustomButton(
-                    onPressed: () {
-                      print('Delete Button Pressed');
-                    },
-                    text: 'Delete',
-                    color: Colors.red,
-                    textColor: Colors.white,
-                    width: 10,
-                    height: 10
-                ),
-              ],
             ),
             const SizedBox(height: 500),
             Expanded(
