@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:password5_54/component/Button.dart';
 import 'package:password5_54/component/common_drawer.dart';
-import '../DB/user.dart';
 
 class AccountScreen extends StatelessWidget {
   AccountScreen({super.key});
