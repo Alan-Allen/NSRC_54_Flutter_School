@@ -4,7 +4,7 @@ import 'package:password5_54/component/common_drawer.dart';
 import '../component/Button.dart';
 
 class SignInScreen extends StatelessWidget {
-  SignInScreen({Key? key}) : super(key: key);
+  SignInScreen({super.key});
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
@@ -102,21 +102,6 @@ class SignInScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Positioned(
-              bottom: 20, // 调整底部偏移量
-              right: 20, // 调整右侧偏移量
-              child: CustomButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/');
-                },
-                text: 'Home',
-                color: Colors.transparent,
-                textColor: Colors.black,
-                width: 20,
-                height: 20,
-              ),
-            ),
-
           ],
         ),
       ),

@@ -82,20 +82,6 @@ class LoginScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Positioned(
-              bottom: 20,
-              right: 20,
-              child: CustomButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/');
-                },
-                text: 'Home',
-                color: Colors.transparent,
-                textColor: Colors.black,
-                width: 20,
-                height: 20,
-              ),
-            ),
           ],
         ),
       ),
