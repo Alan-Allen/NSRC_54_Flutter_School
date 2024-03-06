@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:password5_54/DB/userList.dart';
+import 'package:password5_54/DB/DBHelper.dart';
 import 'package:password5_54/component/Button.dart';
 import 'package:password5_54/component/common_drawer.dart';
 
@@ -6,6 +8,7 @@ class AccountScreen extends StatelessWidget {
   AccountScreen({super.key});
 
   final TextEditingController _searchController = TextEditingController();
+  UserList userList = UserList("", "", "", "");
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +69,7 @@ class AccountScreen extends StatelessWidget {
                   children: [
                     _buildButton2('Insert', Colors.blue, () {
                       print('Insert Button Pressed');
+                      submit();
                     }),
                     _buildButton2('Input', Colors.green, () {
                       print('Input Button Pressed');
@@ -94,7 +98,7 @@ class AccountScreen extends StatelessWidget {
             text,
             style: const TextStyle(
               color: Colors.black,
-              fontSize: 24,
+              fontSize: 17,
             ),
           ),
         );
@@ -119,8 +123,16 @@ class AccountScreen extends StatelessWidget {
       text: text,
       color: color,
       textColor: Colors.white,
-      width: 40,
+      width: 20,
       height: 15,
     );
   }
+}
+
+void submit() async {
+  DBHelper dbHelper = DBHelper();
+  await dbHelper.initDb();
+  var userList = UserList("0", "Admin", "admin", "1234");
+  var db = DBHelper();
+  await db.insertUser(userList);
 }
