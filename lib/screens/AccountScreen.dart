@@ -84,65 +84,43 @@ class AccountScreen extends StatelessWidget {
                           return AlertDialog(
                             title: const Text('Insert'),
                             content: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Center(
-                                        child: SizedBox(
-                                          width: 500, // 调整宽度
-                                          child: TextField(
-                                            controller: _nameController,
-                                            decoration: InputDecoration(
-                                              hintText: 'Enter your name',
-                                              labelText: 'Name',
-                                              border: OutlineInputBorder(
-                                                borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
-                                                borderRadius: BorderRadius.circular(50.0),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 20),
-                                      Center(
-                                        child: SizedBox(
-                                          width: 500, // 调整宽度
-                                          child: TextField(
-                                            controller: _usernameController,
-                                            decoration: InputDecoration(
-                                              hintText: 'Enter your username',
-                                              labelText: 'Username',
-                                              border: OutlineInputBorder(
-                                                borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
-                                                borderRadius: BorderRadius.circular(50.0),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 20),
-                                      Center(
-                                        child: SizedBox(
-                                          width: 500, // 调整宽度
-                                          child: TextField(
-                                            controller: _passwordController,
-                                            obscureText: true,
-                                            decoration: InputDecoration(
-                                              hintText: 'Enter your password',
-                                              labelText: 'Password',
-                                              border: OutlineInputBorder(
-                                                borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
-                                                borderRadius: BorderRadius.circular(50.0),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 20),
-                                    ],
+                                TextField(
+                                  controller: _nameController,
+                                  decoration: InputDecoration(
+                                    hintText: 'Enter your name',
+                                    labelText: 'Name',
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
+                                      borderRadius: BorderRadius.circular(50.0),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                TextField(
+                                  controller: _usernameController,
+                                  decoration: InputDecoration(
+                                    hintText: 'Enter your username',
+                                    labelText: 'Username',
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
+                                      borderRadius: BorderRadius.circular(50.0),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                TextField(
+                                  controller: _passwordController,
+                                  obscureText: true,
+                                  decoration: InputDecoration(
+                                    hintText: 'Enter your password',
+                                    labelText: 'Password',
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
+                                      borderRadius: BorderRadius.circular(50.0),
+                                    ),
                                   ),
                                 ),
                               ],
