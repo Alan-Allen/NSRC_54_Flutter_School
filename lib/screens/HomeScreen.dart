@@ -10,8 +10,15 @@ class HomeScreen extends StatelessWidget {
     return MaterialApp(
       title: 'HomeScreen',
         home: Scaffold(
-          appBar: AppBar(),
-          drawer: CommonDrawer.getDrawer(context),
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.home), // 使用home图标作为返回主页按钮
+              onPressed: () {
+                Navigator.pushNamed(context, '/');
+                print('Back to home');
+              },
+            ),
+          ),
           body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

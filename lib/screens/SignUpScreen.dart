@@ -15,8 +15,15 @@ class SignInScreen extends StatelessWidget {
     return MaterialApp(
       title: 'Sign Up',
       home: Scaffold(
-        appBar: AppBar(),
-        drawer: CommonDrawer.getDrawer(context),
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.home), // 使用home图标作为返回主页按钮
+            onPressed: () {
+              Navigator.pushNamed(context, '/');
+              print('Back to home');
+            },
+          ),
+        ),
         body: Stack(
           children: [
             Padding(

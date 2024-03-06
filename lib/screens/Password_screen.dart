@@ -20,8 +20,15 @@ class _PasswordScreenState extends State<PasswordScreen> {
     return MaterialApp(
       title: 'Random Password',
       home: Scaffold(
-        appBar: AppBar(),
-        drawer: CommonDrawer.getDrawer(context),
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.home), // 使用home图标作为返回主页按钮
+            onPressed: () {
+              Navigator.pushNamed(context, '/');
+              print('Back to home');
+            },
+          ),
+        ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
