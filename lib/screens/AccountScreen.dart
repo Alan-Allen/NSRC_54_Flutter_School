@@ -1,23 +1,34 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:password5_54/DB/userList.dart';
-import 'package:password5_54/DB/DBHelper.dart';
-import 'package:password5_54/component/Button.dart';
-import 'package:password5_54/component/common_drawer.dart';
 
-class AccountScreen extends StatelessWidget {
+import '../DB/DBHelper.dart';
+import '../DB/userList.dart';
+import '../component/Button.dart';
+
+class AccountScreen extends StatefulWidget {
+  @override
+  _AccountScreenState createState() => _AccountScreenState();
+}
+
+class _AccountScreenState extends State<AccountScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _searchController = TextEditingController();
 
-  UserList userList = UserList("", "", "", "");
+  @override
+  void initState() {
+    super.initState();
+    getUsers();
+    clearAllData();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.home), // 使用home图标作为返回主页按钮
+          icon: const Icon(Icons.home),
           onPressed: () {
             Navigator.pushNamed(context, '/');
             print('Back to home');
@@ -140,6 +151,12 @@ class AccountScreen extends StatelessWidget {
                               CustomButton(
                                 onPressed: () {
                                   print('modal save Pressed');
+                                  String name = _nameController.text;
+                                  String user = _usernameController.text;
+                                  String password = _passwordController.text;
+                                  insert(name, user, password);
+                                  getUsers();
+                                  print('input{ name: `$name`, user: `$user`, password: `$password` }');
                                   Navigator.of(context).pop();
                                 },
                                 text: 'Save',
@@ -320,10 +337,32 @@ class AccountScreen extends StatelessWidget {
   }
 }
 
-void Insert() async {
+void insert(String name, String user, String password) async {
   DBHelper dbHelper = DBHelper();
   await dbHelper.initDb();
-  var userList = UserList("0", "Admin", "admin", "1234");
-  var db = DBHelper();
-  await db.insertUser(userList);
+  UserList userList = UserList(0, name, user, password);
+  await dbHelper.insert(userList);
+}
+
+void delete(int id) async {
+  DBHelper dbHelper = DBHelper();
+  await dbHelper.initDb();
+  await dbHelper.delete(id);
+}
+
+void getUsers() async {
+  DBHelper dbHelper = DBHelper();
+  await dbHelper.initDb();
+  List<UserList> users = await dbHelper.getUsers();
+
+  print('User data:');
+  for (var user in users) {
+    print('ID: ${user.id}, Name: ${user.name}, Username: ${user.user}, Password: ${user.password}');
+  }
+}
+
+void clearAllData() async {
+  DBHelper dbHelper = DBHelper();
+  await dbHelper.initDb();
+  await dbHelper.clearAll();
 }

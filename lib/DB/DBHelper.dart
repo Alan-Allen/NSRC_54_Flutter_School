@@ -30,13 +30,26 @@ class DBHelper {
     ''');
   }
 
-  Future<void> insertUser(UserList userList) async {
+  Future<void> insert(UserList userList) async {
     try {
       var dbClient = await database; // Ensure database is initialized
       await dbClient?.transaction((txn) async {
         await txn.rawInsert('''
-          INSERT INTO users(name, user, password) 
+          INSERT INTO users(name, user, password)
           VALUES('${userList.name}', '${userList.user}', '${userList.password}')
+        ''');
+      });
+    } catch (e) {
+      print('Error inserting user: $e');
+    }
+  }
+
+  Future<void> delete(int id) async {
+    try {
+      var dbClient = await database;
+      await dbClient?.transaction((txn) async {
+        await txn.rawInsert('''
+          DELETE FROM users WHERE id = $id
         ''');
       });
     } catch (e) {
@@ -58,6 +71,18 @@ class DBHelper {
     } catch (e) {
       print('Error getting users: $e');
       return [];
+    }
+  }
+
+  Future<void> clearAll() async {
+    try {
+      var dbClient = await database;
+      await dbClient?.transaction((txn) async {
+        await txn.rawDelete('DELETE FROM users');
+      });
+      print('All data cleared successfully.');
+    } catch (e) {
+      print('Error clearing data: $e');
     }
   }
 }

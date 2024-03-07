@@ -1,5 +1,5 @@
 class UserList {
-  late String id;
+  late int id;
   late String name;
   late String user;
   late String password;
@@ -8,7 +8,7 @@ class UserList {
 
   static UserList fromMap(Map map) {
     return UserList(
-      map['id'] as String,
+      map['id'] as int,
       map['name'] as String,
       map['user'] as String,
       map['password'] as String,
