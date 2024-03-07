@@ -16,11 +16,22 @@ class _AccountScreenState extends State<AccountScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _searchController = TextEditingController();
 
+  late List<UserList> users = [];
+
   @override
   void initState() {
     super.initState();
     getUsers();
-    clearAllData();
+    getUsersFromDB();
+  }
+
+  void getUsersFromDB() async {
+    DBHelper dbHelper = DBHelper();
+    await dbHelper.initDb();
+    List<UserList> userList = await dbHelper.getUsers();
+    setState(() {
+      users = userList;
+    });
   }
 
   @override
@@ -62,6 +73,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   _buildButton('Search', Colors.blue, () {
                     print("Search Button Pressed");
                     String search = _searchController.text;
+                    _searchController.clear();
                     print('search: $search');
                   }),
                 ],
@@ -74,10 +86,16 @@ class _AccountScreenState extends State<AccountScreen> {
                 width: 2.0,
                 style: BorderStyle.solid,
               ),
+              columnWidths: const {
+                0: FractionColumnWidth(0.2),
+                1: FractionColumnWidth(0.2),
+                2: FractionColumnWidth(0.2),
+                3: FractionColumnWidth(0.1),
+              },
               children: [
-                _buildTableHeaderRow(['MF', 'Name', 'User', 'Password', 'Other']),
-                _buildTableRow(['Admin', 'admin', '1234'], context),
-                _buildTableRow(['Alan', 'Alan_0811', '4321'], context),
+                _buildTableHeaderRow(['Name', 'User', 'Password', 'Other']),
+                for (var user in users)
+                  _buildTableRow([user.name, user.user, user.password], context),
               ],
             ),
             const SizedBox(height: 20),
@@ -87,6 +105,37 @@ class _AccountScreenState extends State<AccountScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    _buildButton2('Output', Colors.redAccent, () {
+                      print('Output Button Pressed');
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Output'),
+                            content: const Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                //outputset
+                              ],
+                            ),
+                            actions: [
+                              CustomButton(
+                                onPressed: () {
+                                  print('modal close Pressed');
+                                  Navigator.of(context).pop();
+                                },
+                                text: 'Close',
+                                color: Colors.orangeAccent,
+                                textColor: Colors.white,
+                                width: 15,
+                                height: 10,
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }),
                     _buildButton2('Insert', Colors.blue, () {
                       print('Insert Button Pressed');
                       showDialog(
@@ -154,13 +203,48 @@ class _AccountScreenState extends State<AccountScreen> {
                                   String name = _nameController.text;
                                   String user = _usernameController.text;
                                   String password = _passwordController.text;
+                                  clearInput();
                                   insert(name, user, password);
-                                  getUsers();
                                   print('input{ name: `$name`, user: `$user`, password: `$password` }');
                                   Navigator.of(context).pop();
+                                  setState(() {
+                                    getUsers();
+                                    getUsersFromDB();
+                                  });
                                 },
                                 text: 'Save',
                                 color: Colors.blue,
+                                textColor: Colors.white,
+                                width: 15,
+                                height: 10,
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }),
+                    _buildButton2('Input', Colors.orange, () {
+                      print('Input Button Pressed');
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Input'),
+                            content: const Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                //Inputset
+                              ],
+                            ),
+                            actions: [
+                              CustomButton(
+                                onPressed: () {
+                                  print('modal close Pressed');
+                                  Navigator.of(context).pop();
+                                },
+                                text: 'Close',
+                                color: Colors.orangeAccent,
                                 textColor: Colors.white,
                                 width: 15,
                                 height: 10,
@@ -184,21 +268,6 @@ class _AccountScreenState extends State<AccountScreen> {
   static TableRow _buildTableRow(List<String> data, BuildContext context, {bool isHeader = false}) {
     List<Widget> children = [];
 
-    children.add(
-      SizedBox(
-        child: CustomButton(
-          onPressed: () {
-            print('MF Button Pressed');
-          },
-          text: 'MF',
-          color: Colors.red,
-          textColor: Colors.white,
-          width: 10,
-          height: 10,
-        ),
-      ),
-    );
-
     children.addAll(data.map((String text) {
       return Container(
         padding: const EdgeInsets.all(8.0),
@@ -214,7 +283,8 @@ class _AccountScreenState extends State<AccountScreen> {
     }).toList());
 
     children.add(
-      SizedBox(
+      Padding(
+        padding: const EdgeInsets.all(8.0), // Add padding here as needed
         child: CustomButton(
           onPressed: () {
             print('Setting Button Pressed');
@@ -228,6 +298,16 @@ class _AccountScreenState extends State<AccountScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
+                          CustomButton(
+                            onPressed: () {
+                              print('MF Button Pressed');
+                            },
+                            text: 'MF',
+                            color: Colors.red,
+                            textColor: Colors.white,
+                            width: 15,
+                            height: 10,
+                          ),
                           CustomButton(
                             onPressed: () {
                               print('Update Button Pressed');
@@ -277,7 +357,7 @@ class _AccountScreenState extends State<AccountScreen> {
           color: Colors.grey,
           textColor: Colors.white,
           width: 10,
-          height: 10,
+          height: 5,
         ),
       ),
     );
@@ -334,6 +414,12 @@ class _AccountScreenState extends State<AccountScreen> {
       width: 20,
       height: 15,
     );
+  }
+
+  void clearInput() {
+    _nameController.clear();
+    _usernameController.clear();
+    _passwordController.clear();
   }
 }
 

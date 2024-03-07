@@ -32,7 +32,7 @@ class DBHelper {
 
   Future<void> insert(UserList userList) async {
     try {
-      var dbClient = await database; // Ensure database is initialized
+      var dbClient = await database;
       await dbClient?.transaction((txn) async {
         await txn.rawInsert('''
           INSERT INTO users(name, user, password)

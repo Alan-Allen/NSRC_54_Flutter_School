@@ -6,10 +6,15 @@ import 'package:password5_54/screens/SignUpScreen.dart';
 import 'package:password5_54/screens/Password_screen.dart';
 import 'package:password5_54/screens/AccountScreen.dart';
 
+import 'DB/userList.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DBHelper dbHelper = DBHelper();
   await dbHelper.initDb();
+  await dbHelper.clearAll();
+  UserList userList = UserList(0, "SuperAdmin", "admin", "1234");
+  await dbHelper.insert(userList);
   runApp(const MyApp());
 }
 

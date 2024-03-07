@@ -41,40 +41,43 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 ),
               ),
             ),
-            Center(
-              child: SizedBox(
-                width: 500,
-                child: TextField(
-                  controller: _lengthController,
-                  decoration: InputDecoration(
-                    hintText: 'Enter length',
-                    labelText: 'Length',
-                    border: OutlineInputBorder(
-                      borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
-                      borderRadius: BorderRadius.circular(50.0),
+            Expanded(
+              child: Center(
+                child: SizedBox(
+                  width: 400,
+                  height: 10,
+                  child: TextField(
+                    controller: _lengthController,
+                    decoration: InputDecoration(
+                      hintText: 'Enter length',
+                      labelText: 'Length',
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 30),
-            Center(
-              child: SizedBox(
-                width: 500,
-                child: TextField(
-                  controller: _characterController,
-                  decoration: InputDecoration(
-                    hintText: 'Enter Character',
-                    labelText: 'Character',
-                    border: OutlineInputBorder(
-                      borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
-                      borderRadius: BorderRadius.circular(50.0),
+            Expanded(
+              child: Center(
+                child: SizedBox(
+                  width: 400,
+                  child: TextField(
+                    controller: _characterController,
+                    decoration: InputDecoration(
+                      hintText: 'Enter Character',
+                      labelText: 'Character',
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 40),
             CustomButton(
               onPressed: () {
                 print('Create Button Pressed');
@@ -95,12 +98,14 @@ class _PasswordScreenState extends State<PasswordScreen> {
               width: 30,
               height: 20,
             ),
-            const SizedBox(height: 20),
-            Text(
-              'Random Password: $_generatedPassword',
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.normal,
+            const SizedBox(height: 10),
+            Expanded(
+              child: Text(
+                'Random Password: \n $_generatedPassword',
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
             ),
           ],
