@@ -82,7 +82,7 @@ class SignInScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 200),
+                  const SizedBox(height: 50),
                   Center(
                     child: CustomButton(
                       onPressed: () {

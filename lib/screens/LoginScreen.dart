@@ -63,7 +63,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 200),
+                  const SizedBox(height: 100),
                   Center(
                     child: CustomButton(
                       onPressed: () {

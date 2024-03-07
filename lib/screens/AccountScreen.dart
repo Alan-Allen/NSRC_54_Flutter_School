@@ -109,7 +109,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 20),
+                                const SizedBox(height: 10),
                                 TextField(
                                   controller: _usernameController,
                                   decoration: InputDecoration(
@@ -121,7 +121,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 20),
+                                const SizedBox(height: 10),
                                 TextField(
                                   controller: _passwordController,
                                   obscureText: true,
