@@ -28,6 +28,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
               print('Back to home');
             },
           ),
+          title: const Text('Random Password'),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -45,7 +46,6 @@ class _PasswordScreenState extends State<PasswordScreen> {
               child: Center(
                 child: SizedBox(
                   width: 400,
-                  height: 10,
                   child: TextField(
                     controller: _lengthController,
                     decoration: InputDecoration(

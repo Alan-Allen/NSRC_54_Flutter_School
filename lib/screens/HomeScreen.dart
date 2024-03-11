@@ -10,7 +10,9 @@ class HomeScreen extends StatelessWidget {
     return MaterialApp(
       title: 'HomeScreen',
         home: Scaffold(
-          appBar: AppBar(),
+          appBar: AppBar(
+            title: const Text('Home'),
+          ),
           drawer: CommonDrawer.getDrawer(context),
           body: Center(
             child: Column(

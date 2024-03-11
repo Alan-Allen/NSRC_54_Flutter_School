@@ -21,6 +21,7 @@ class LoginScreen extends StatelessWidget {
               print('Back to home');
             },
           ),
+          title: const Text('Login Page'),
         ),
         body: Stack(
           children: [

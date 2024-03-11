@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../DB/DBHelper.dart';
@@ -6,6 +5,8 @@ import '../DB/userList.dart';
 import '../component/Button.dart';
 
 class AccountScreen extends StatefulWidget {
+  const AccountScreen({super.key});
+
   @override
   _AccountScreenState createState() => _AccountScreenState();
 }
@@ -45,6 +46,7 @@ class _AccountScreenState extends State<AccountScreen> {
             print('Back to home');
           },
         ),
+        title: const Text('AccountMangement'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

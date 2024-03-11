@@ -23,6 +23,7 @@ class SignInScreen extends StatelessWidget {
               print('Back to home');
             },
           ),
+          title: const Text('Sign Up'),
         ),
         body: Stack(
           children: [
