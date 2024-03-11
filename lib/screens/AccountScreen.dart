@@ -122,37 +122,6 @@ class _AccountScreenState extends State<AccountScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    _buildButton2('Output', Colors.redAccent, () {
-                      print('Output Button Pressed');
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('Output'),
-                            content: const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                //outputset
-                              ],
-                            ),
-                            actions: [
-                              CustomButton(
-                                onPressed: () {
-                                  print('modal close Pressed');
-                                  Navigator.of(context).pop();
-                                },
-                                text: 'Close',
-                                color: Colors.orangeAccent,
-                                textColor: Colors.white,
-                                width: 15,
-                                height: 10,
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }),
                     _buildButton2('Insert', Colors.blue, () {
                       print('Insert Button Pressed');
                       showDialog(
@@ -231,37 +200,6 @@ class _AccountScreenState extends State<AccountScreen> {
                                 },
                                 text: 'Save',
                                 color: Colors.blue,
-                                textColor: Colors.white,
-                                width: 15,
-                                height: 10,
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }),
-                    _buildButton2('Input', Colors.orange, () {
-                      print('Input Button Pressed');
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('Input'),
-                            content: const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                //Inputset
-                              ],
-                            ),
-                            actions: [
-                              CustomButton(
-                                onPressed: () {
-                                  print('modal close Pressed');
-                                  Navigator.of(context).pop();
-                                },
-                                text: 'Close',
-                                color: Colors.orangeAccent,
                                 textColor: Colors.white,
                                 width: 15,
                                 height: 10,

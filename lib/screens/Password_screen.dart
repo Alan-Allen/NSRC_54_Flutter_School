@@ -13,6 +13,7 @@ class PasswordScreen extends StatefulWidget {
 class _PasswordScreenState extends State<PasswordScreen> {
   final TextEditingController _lengthController = TextEditingController();
   final TextEditingController _characterController = TextEditingController();
+  final TextEditingController _generatedPasswordController = TextEditingController();
   String _generatedPassword = '';
 
   @override
@@ -50,7 +51,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             TextField(
               controller: _characterController,
               decoration: InputDecoration(
@@ -62,7 +63,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 80),
+            const SizedBox(height: 15),
             CustomButton(
               onPressed: () {
                 print('Create Button Pressed');
@@ -75,6 +76,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 int passwordLength = int.tryParse(length) ?? 8;
                 setState(() {
                   _generatedPassword = generatePassword(passwordLength, allowedCharacters: character);
+                  _generatedPasswordController.text = _generatedPassword;
                   print('Length: $length, Character: $character, Password: $_generatedPassword');
                 });
               },
@@ -84,12 +86,14 @@ class _PasswordScreenState extends State<PasswordScreen> {
               width: 30,
               height: 20,
             ),
-            const SizedBox(height: 10),
-            Text(
-              'Random Password: \n $_generatedPassword',
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.normal,
+            const SizedBox(height: 15),
+            TextField( // Use TextField instead of Text for editing
+              controller: _generatedPasswordController,
+              decoration: const InputDecoration(
+                labelText: 'Generated Password', // Change label
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                ),
               ),
             ),
           ],
