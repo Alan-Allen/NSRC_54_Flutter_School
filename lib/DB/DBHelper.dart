@@ -57,7 +57,7 @@ class DBHelper {
     }
   }
 
-  Future<List<UserList>> getUsers() async {
+  Future<List<UserList>> getAll() async {
     try {
       var dbClient = await database;
       List<Map>? maps = (await dbClient?.query('users'))?.cast<Map>();
@@ -65,6 +65,25 @@ class DBHelper {
       if (maps!.isNotEmpty) {
         for (int i = 0; i < maps.length; i++) {
           users. add(UserList.fromMap(maps[i]));
+        }
+      }
+      return users;
+    } catch (e) {
+      print('Error getting users: $e');
+      return [];
+    }
+  }
+
+  Future<List<UserList>> getUser(String user) async {
+    try {
+      var dbClient = await database;
+      List<Map>? maps = (await dbClient?.query('users'))?.cast<Map>();
+      List<UserList> users = [];
+      if (maps!.isNotEmpty) {
+        for (int i = 0; i < maps.length; i++) {
+          if (maps[i]['user'] == user) {
+            users.add(UserList.fromMap(maps[i]));
+          }
         }
       }
       return users;

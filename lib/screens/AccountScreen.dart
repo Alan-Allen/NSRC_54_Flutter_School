@@ -22,14 +22,14 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   void initState() {
     super.initState();
-    getUsers();
+    getAll();
     getUsersFromDB();
   }
 
   void getUsersFromDB() async {
     DBHelper dbHelper = DBHelper();
     await dbHelper.initDb();
-    List<UserList> userList = await dbHelper.getUsers();
+    List<UserList> userList = await dbHelper.getAll();
     setState(() {
       users = userList;
     });
@@ -47,6 +47,17 @@ class _AccountScreenState extends State<AccountScreen> {
           },
         ),
         title: const Text('AccountMangement'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () {
+              print('Refresh Button Pressed');
+              setState(() {
+                getUsersFromDB();
+              });
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -62,7 +73,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     child: TextField(
                       controller: _searchController,
                       decoration: InputDecoration(
-                        hintText: 'Enter Name',
+                        hintText: 'Enter user',
                         labelText: 'Search',
                         border: OutlineInputBorder(
                           borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
@@ -72,11 +83,15 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                   ),
                   const SizedBox(width: 20),
-                  _buildButton('Search', Colors.blue, () {
+                  _buildButton('Search', Colors.blue, () async {
                     print("Search Button Pressed");
                     String search = _searchController.text;
                     _searchController.clear();
                     print('search: $search');
+                    List<UserList> result = await getUser(search);
+                    setState(() {
+                      users = result;
+                    });
                   }),
                 ],
               ),
@@ -210,7 +225,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                   print('input{ name: `$name`, user: `$user`, password: `$password` }');
                                   Navigator.of(context).pop();
                                   setState(() {
-                                    getUsers();
+                                    getAll();
                                     getUsersFromDB();
                                   });
                                 },
@@ -438,15 +453,27 @@ void delete(int id) async {
   await dbHelper.delete(id);
 }
 
-void getUsers() async {
+void getAll() async {
   DBHelper dbHelper = DBHelper();
   await dbHelper.initDb();
-  List<UserList> users = await dbHelper.getUsers();
+  List<UserList> users = await dbHelper.getAll();
 
   print('User data:');
   for (var user in users) {
     print('ID: ${user.id}, Name: ${user.name}, Username: ${user.user}, Password: ${user.password}');
   }
+}
+
+Future<List<UserList>> getUser(String user) async {
+  DBHelper dbHelper = DBHelper();
+  await dbHelper.initDb();
+  List<UserList> users = await dbHelper.getUser(user);
+
+  print('getUser:');
+  for (var user in users) {
+    print('ID: ${user.id}, Name: ${user.name}, Username: ${user.user}, Password: ${user.password}');
+  }
+  return users;
 }
 
 void clearAllData() async {
