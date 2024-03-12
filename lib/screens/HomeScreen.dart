@@ -85,7 +85,7 @@ class HomeScreen extends StatelessWidget {
                 CustomButton(
                   onPressed: () {
                     print('KeySettingScreen Button Pressed');
-                    Navigator.pushNamed(context, '/');
+                    Navigator.pushNamed(context, '/key');
                   },
                   width: 45,
                   height: 20,

@@ -382,7 +382,7 @@ void insert(String name, String user, String password) async {
   DBHelper dbHelper = DBHelper();
   await dbHelper.initDb();
   UserList userList = UserList(0, name, user, password);
-  await dbHelper.insert(userList);
+  await dbHelper.insertUser(userList);
 }
 
 void delete(int id) async {
