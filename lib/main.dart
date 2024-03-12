@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:password5_54/DB/DBHelper.dart';
-import 'package:password5_54/screens/HomeScreen.dart';
-import 'package:password5_54/screens/KeyScreen.dart';
-import 'package:password5_54/screens/LoginScreen.dart';
-import 'package:password5_54/screens/SignUpScreen.dart';
-import 'package:password5_54/screens/Password_screen.dart';
-import 'package:password5_54/screens/AccountScreen.dart';
-import 'package:password5_54/screens/KeyScreen.dart';
+import 'package:password5_54/routes/router.dart';
 
 import 'DB/userList.dart';
 
@@ -25,17 +19,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: {
-
-        '/': (context) => const HomeScreen(),
-        '/login': (context) => LoginScreen(),
-        '/signIn': (context) => SignInScreen(),
-        '/account': (context) => AccountScreen(),
-        '/password': (context) => const PasswordScreen(),
-        '/key': (context) => const KeyScreen(),
-      },
-      initialRoute: '/',
+    return MaterialApp.router(
+      routerConfig: router,
     );
   }
 }

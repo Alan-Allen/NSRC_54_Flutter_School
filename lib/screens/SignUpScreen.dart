@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:password5_54/component/common_drawer.dart';
 
 import '../component/Button.dart';
+import '../routes/router.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
@@ -17,9 +18,9 @@ class SignInScreen extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: const Icon(Icons.home), // 使用home图标作为返回主页按钮
+            icon: const Icon(Icons.home),
             onPressed: () {
-              Navigator.pushNamed(context, '/');
+              router.go('/');
               print('Back to home');
             },
           ),

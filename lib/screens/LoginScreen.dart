@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:password5_54/DB/userList.dart';
 import 'package:password5_54/component/Button.dart';
-import 'package:password5_54/component/common_drawer.dart';
+import 'package:password5_54/routes/router.dart';
+import '../DB/DBHelper.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -17,7 +19,7 @@ class LoginScreen extends StatelessWidget {
           leading: IconButton(
             icon: const Icon(Icons.home), // 使用home图标作为返回主页按钮
             onPressed: () {
-              Navigator.pushNamed(context, '/');
+              router.go('/');
               print('Back to home');
             },
           ),
@@ -67,11 +69,13 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(height: 100),
                   Center(
                     child: CustomButton(
-                      onPressed: () {
+                      onPressed: () async {
                         print("Login Button Pressed");
                         String username = _usernameController.text;
                         String password = _passwordController.text;
-                        print('Username: $username, Password: $password');
+                        clearInput();
+                        bool login = await validateUser(username, password);
+                        print('Username: $username, Password: $password, Login?: $login');
                       },
                       text: 'Login',
                       color: Colors.blue,
@@ -87,5 +91,28 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<bool> validateUser(String user, String password) async {
+    try {
+      DBHelper dbHelper = DBHelper();
+      await dbHelper.initDb();
+      List<UserList> users = await dbHelper.getUser(user);
+
+      print('getUser:');
+      for (var user in users) {
+        print('ID: ${user.id}, Name: ${user.name}, Username: ${user.user}, Password: ${user.password}');
+      }
+
+      return users.isNotEmpty && users.first.password == password;
+    } catch (e) {
+      print('Error validating user: $e');
+      return false;
+    }
+  }
+
+  void clearInput() {
+    _usernameController.clear();
+    _passwordController.clear();
   }
 }

@@ -3,6 +3,8 @@ import 'package:password5_54/component/Button.dart';
 import 'dart:math';
 import 'package:password5_54/component/common_drawer.dart';
 
+import '../routes/router.dart';
+
 class PasswordScreen extends StatefulWidget {
   const PasswordScreen({Key? key});
 
@@ -23,7 +25,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
         leading: IconButton(
           icon: const Icon(Icons.home),
           onPressed: () {
-            Navigator.pushNamed(context, '/');
+            router.go('/');
             print('Back to home');
           },
         ),

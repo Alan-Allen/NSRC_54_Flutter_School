@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../routes/router.dart';
+
 class KeyScreen extends StatefulWidget {
   const KeyScreen({super.key});
 
@@ -15,7 +17,7 @@ class _KeyScreenState extends State<KeyScreen> {
         leading: IconButton(
           icon: const Icon(Icons.home),
           onPressed: () {
-            Navigator.pushNamed(context, '/');
+            router.go('/');
             print('Back to home');
           },
         ),

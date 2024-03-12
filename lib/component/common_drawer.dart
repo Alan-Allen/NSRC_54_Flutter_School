@@ -1,38 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CommonDrawer {
   static Drawer getDrawer(BuildContext context) {
+    final router = GoRouter.of(context);
+
     return Drawer(
       child: ListView(
         children: [
           ListTile(
             title: const Text('Home'),
             onTap: () {
-              Navigator.pushNamed(context, '/');
+              router.go('/');
             },
           ),
           ListTile(
             title: const Text('Login'),
             onTap: () {
-              Navigator.pushNamed(context, '/login');
+              router.go('/login');
             },
           ),
           ListTile(
             title: const Text('SignIn'),
             onTap: () {
-              Navigator.pushNamed(context, '/signIn');
+              router.go('/signIn');
             },
           ),
           ListTile(
             title: const Text('account'),
             onTap: () {
-              Navigator.pushNamed(context, '/account');
+              router.go('/account');
             },
           ),
           ListTile(
             title: const Text('Random Password'),
             onTap: () {
-              Navigator.pushNamed(context, '/password');
+              router.go('/password');
             },
           ),
         ],

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../DB/DBHelper.dart';
 import '../DB/userList.dart';
 import '../component/Button.dart';
+import '../routes/router.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -42,7 +43,7 @@ class _AccountScreenState extends State<AccountScreen> {
         leading: IconButton(
           icon: const Icon(Icons.home),
           onPressed: () {
-            Navigator.pushNamed(context, '/');
+            router.go('/');
             print('Back to home');
           },
         ),
@@ -112,7 +113,7 @@ class _AccountScreenState extends State<AccountScreen> {
               children: [
                 _buildTableHeaderRow(['Name', 'User', 'Password', 'Other']),
                 for (var user in users)
-                  _buildTableRow([user.name, user.user, user.password], context),
+                  _buildTableRow(user, context),
               ],
             ),
             const SizedBox(height: 20),
@@ -124,6 +125,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   children: [
                     _buildButton2('Insert', Colors.blue, () {
                       print('Insert Button Pressed');
+                      clearInput();
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -220,10 +222,10 @@ class _AccountScreenState extends State<AccountScreen> {
     );
   }
 
-  static TableRow _buildTableRow(List<String> data, BuildContext context, {bool isHeader = false}) {
+  TableRow _buildTableRow(UserList user, BuildContext context) {
     List<Widget> children = [];
 
-    children.addAll(data.map((String text) {
+    children.addAll([user.name, user.user, user.password].map((String text) {
       return Container(
         padding: const EdgeInsets.all(8.0),
         alignment: Alignment.center,
@@ -242,77 +244,112 @@ class _AccountScreenState extends State<AccountScreen> {
         padding: const EdgeInsets.all(8.0), // Add padding here as needed
         child: CustomButton(
           onPressed: () {
-            print('Setting Button Pressed');
+            print('Setting Button Pressed for ID: ${user.id}');
+            _nameController.text = user.name;
+            _usernameController.text = user.user;
+            _passwordController.text = user.password;
             showDialog(
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: const Text('Settings'),
-                  content: SingleChildScrollView(
-                    child: IntrinsicHeight(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          CustomButton(
-                            onPressed: () {
-                              print('MF Button Pressed');
-                            },
-                            text: 'MF',
-                            color: Colors.red,
-                            textColor: Colors.white,
-                            width: 15,
-                            height: 10,
+                  title: const Text('Setting'),
+                  content: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextField(
+                        controller: _nameController,
+                        decoration: InputDecoration(
+                          hintText: 'Enter your name',
+                          labelText: 'Name',
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
+                            borderRadius: BorderRadius.circular(50.0),
                           ),
-                          CustomButton(
-                            onPressed: () {
-                              print('Update Button Pressed');
-                            },
-                            text: 'Update',
-                            color: Colors.orangeAccent,
-                            textColor: Colors.white,
-                            width: 15,
-                            height: 10,
-                          ),
-                          CustomButton(
-                            onPressed: () {
-                              print('Delete Button Pressed');
-                            },
-                            text: 'Delete',
-                            color: Colors.red,
-                            textColor: Colors.white,
-                            width: 15,
-                            height: 10,
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                      const SizedBox(height: 10),
+                      TextField(
+                        controller: _usernameController,
+                        decoration: InputDecoration(
+                          hintText: 'Enter your username',
+                          labelText: 'Username',
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
+                            borderRadius: BorderRadius.circular(50.0),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      TextField(
+                        controller: _passwordController,
+                        decoration: InputDecoration(
+                          hintText: 'Enter your password',
+                          labelText: 'Password',
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
+                            borderRadius: BorderRadius.circular(50.0),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   actions: [
+                    CustomButton(
+                        onPressed: () {
+                          print('Delete Button Pressed');
+                          delete(user.id);
+                          Navigator.of(context).pop();
+                          setState(() {
+                            getUsersFromDB();
+                          });
+                        },
+                        text: 'Delete',
+                        color: Colors.red,
+                        textColor: Colors.white,
+                        width: 15,
+                        height: 10,
+                    ),
                     CustomButton(
                       onPressed: () {
                         print('modal close Pressed');
                         Navigator.of(context).pop();
                       },
-                      text: 'Close',
-                      color: Colors.white60,
-                      textColor: Colors.black54,
+                      text: 'Cancel',
+                      color: Colors.orangeAccent,
+                      textColor: Colors.white,
+                      width: 15,
+                      height: 10,
+                    ),
+                    CustomButton(
+                      onPressed: () {
+                        print('modal update Pressed');
+                        String name = _nameController.text;
+                        String username = _usernameController.text;
+                        String password = _passwordController.text;
+                        update(user.id, name, username, password);
+                        print('Updated { name: `$name`, username: `$username`, password: `$password` }');
+                        Navigator.of(context).pop();
+                        setState(() {
+                          getUsersFromDB();
+                        });
+                      },
+                      text: 'Update',
+                      color: Colors.blue,
+                      textColor: Colors.white,
                       width: 15,
                       height: 10,
                     ),
                   ],
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
                 );
               },
             );
           },
-          text: 'Set',
+          text: 'set',
           color: Colors.grey,
           textColor: Colors.white,
-          width: 10,
-          height: 5,
+          width: 15,
+          height: 10,
         ),
       ),
     );
@@ -383,6 +420,13 @@ void insert(String name, String user, String password) async {
   await dbHelper.initDb();
   UserList userList = UserList(0, name, user, password);
   await dbHelper.insertUser(userList);
+}
+
+void update(int id, String name, String user, String password) async {
+  DBHelper dbHelper = DBHelper();
+  await dbHelper.initDb();
+  UserList userList = UserList(id, name, user, password);
+  await dbHelper.updateUser(userList);
 }
 
 void delete(int id) async {
