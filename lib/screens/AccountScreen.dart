@@ -98,25 +98,14 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            Table(
-              border: TableBorder.all(
-                color: Colors.black87,
-                width: 2.0,
-                style: BorderStyle.solid,
+            Expanded(
+              child: ListView.builder(
+                itemCount: users.length,
+                itemBuilder: (context, index) {
+                  return _buildUserRow(users[index], context);
+                },
               ),
-              columnWidths: const {
-                0: FractionColumnWidth(0.2),
-                1: FractionColumnWidth(0.2),
-                2: FractionColumnWidth(0.2),
-                3: FractionColumnWidth(0.1),
-              },
-              children: [
-                _buildTableHeaderRow(['Name', 'User', 'Password', 'Other']),
-                for (var user in users)
-                  _buildTableRow(user, context),
-              ],
             ),
-            const SizedBox(height: 20),
             Expanded(
               child: Align(
                 alignment: Alignment.bottomCenter,
@@ -222,140 +211,158 @@ class _AccountScreenState extends State<AccountScreen> {
     );
   }
 
-  TableRow _buildTableRow(UserList user, BuildContext context) {
-    List<Widget> children = [];
-
-    children.addAll([user.name, user.user, user.password].map((String text) {
-      return Container(
-        padding: const EdgeInsets.all(8.0),
-        alignment: Alignment.center,
-        child: Text(
-          text,
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 13,
+  Widget _buildUserRow(UserList user, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: Text(
+              user.name,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 13,
+              ),
+            ),
           ),
-        ),
-      );
-    }).toList());
-
-    children.add(
-      Padding(
-        padding: const EdgeInsets.all(8.0), // Add padding here as needed
-        child: CustomButton(
-          onPressed: () {
-            print('Setting Button Pressed for ID: ${user.id}');
-            _nameController.text = user.name;
-            _usernameController.text = user.user;
-            _passwordController.text = user.password;
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text('Setting'),
-                  content: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      TextField(
-                        controller: _nameController,
-                        decoration: InputDecoration(
-                          hintText: 'Enter your name',
-                          labelText: 'Name',
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
-                            borderRadius: BorderRadius.circular(50.0),
-                          ),
+          Expanded(
+            flex: 2,
+            child: Text(
+              user.user,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 13,
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Text(
+              user.password,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 13,
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: CustomButton(
+                onPressed: () {
+                  print('Setting Button Pressed for ID: ${user.id}');
+                  _nameController.text = user.name;
+                  _usernameController.text = user.user;
+                  _passwordController.text = user.password;
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Setting'),
+                        content: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            TextField(
+                              controller: _nameController,
+                              decoration: InputDecoration(
+                                hintText: 'Enter your name',
+                                labelText: 'Name',
+                                border: OutlineInputBorder(
+                                  borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
+                                  borderRadius: BorderRadius.circular(50.0),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            TextField(
+                              controller: _usernameController,
+                              decoration: InputDecoration(
+                                hintText: 'Enter your username',
+                                labelText: 'Username',
+                                border: OutlineInputBorder(
+                                  borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
+                                  borderRadius: BorderRadius.circular(50.0),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            TextField(
+                              controller: _passwordController,
+                              decoration: InputDecoration(
+                                hintText: 'Enter your password',
+                                labelText: 'Password',
+                                border: OutlineInputBorder(
+                                  borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
+                                  borderRadius: BorderRadius.circular(50.0),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      TextField(
-                        controller: _usernameController,
-                        decoration: InputDecoration(
-                          hintText: 'Enter your username',
-                          labelText: 'Username',
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
-                            borderRadius: BorderRadius.circular(50.0),
+                        actions: [
+                          CustomButton(
+                            onPressed: () {
+                              print('Delete Button Pressed');
+                              delete(user.id);
+                              Navigator.of(context).pop();
+                              setState(() {
+                                getUsersFromDB();
+                              });
+                            },
+                            text: 'Delete',
+                            color: Colors.red,
+                            textColor: Colors.white,
+                            width: 15,
+                            height: 10,
                           ),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      TextField(
-                        controller: _passwordController,
-                        decoration: InputDecoration(
-                          hintText: 'Enter your password',
-                          labelText: 'Password',
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(width: 3, color: Colors.greenAccent),
-                            borderRadius: BorderRadius.circular(50.0),
+                          CustomButton(
+                            onPressed: () {
+                              print('modal close Pressed');
+                              Navigator.of(context).pop();
+                            },
+                            text: 'Cancel',
+                            color: Colors.orangeAccent,
+                            textColor: Colors.white,
+                            width: 15,
+                            height: 10,
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  actions: [
-                    CustomButton(
-                        onPressed: () {
-                          print('Delete Button Pressed');
-                          delete(user.id);
-                          Navigator.of(context).pop();
-                          setState(() {
-                            getUsersFromDB();
-                          });
-                        },
-                        text: 'Delete',
-                        color: Colors.red,
-                        textColor: Colors.white,
-                        width: 15,
-                        height: 10,
-                    ),
-                    CustomButton(
-                      onPressed: () {
-                        print('modal close Pressed');
-                        Navigator.of(context).pop();
-                      },
-                      text: 'Cancel',
-                      color: Colors.orangeAccent,
-                      textColor: Colors.white,
-                      width: 15,
-                      height: 10,
-                    ),
-                    CustomButton(
-                      onPressed: () {
-                        print('modal update Pressed');
-                        String name = _nameController.text;
-                        String username = _usernameController.text;
-                        String password = _passwordController.text;
-                        update(user.id, name, username, password);
-                        print('Updated { name: `$name`, username: `$username`, password: `$password` }');
-                        Navigator.of(context).pop();
-                        setState(() {
-                          getUsersFromDB();
-                        });
-                      },
-                      text: 'Update',
-                      color: Colors.blue,
-                      textColor: Colors.white,
-                      width: 15,
-                      height: 10,
-                    ),
-                  ],
-                );
-              },
-            );
-          },
-          text: 'set',
-          color: Colors.grey,
-          textColor: Colors.white,
-          width: 15,
-          height: 10,
-        ),
+                          CustomButton(
+                            onPressed: () {
+                              print('modal update Pressed');
+                              String name = _nameController.text;
+                              String username = _usernameController.text;
+                              String password = _passwordController.text;
+                              update(user.id, name, username, password);
+                              print('Updated { name: `$name`, username: `$username`, password: `$password` }');
+                              Navigator.of(context).pop();
+                              setState(() {
+                                getUsersFromDB();
+                              });
+                            },
+                            text: 'Update',
+                            color: Colors.blue,
+                            textColor: Colors.white,
+                            width: 15,
+                            height: 10,
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                text: 'set',
+                color: Colors.grey,
+                textColor: Colors.white,
+                width: 15,
+                height: 10,
+              ),
+            ),
+          ),
+        ],
       ),
-    );
-
-    return TableRow(
-      children: children,
     );
   }
 
